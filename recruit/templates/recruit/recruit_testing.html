@@ -1,0 +1,32 @@
+{% extends 'basic/main_template.html' %}
+
+{% block content %}
+<h1 class="display-4">Тестовое испытание Руки Тени</h1>
+{% if error_message %}
+    <div class="alert alert-danger">
+        {{ error_message }}
+    </div>
+{% endif %}
+<form class="" method="post">
+    {% csrf_token %}
+    <ul class="list-group">
+    {% for question in questions %}
+        <li class="list-group-item">
+            <div class="custom-control custom-switch">
+                <input 
+                    type="checkbox" 
+                    class="custom-control-input" 
+                    id="questionSwitch{{ question.id }}"
+                    name="question[]"
+                    value="{{ question.id }}">
+                <label class="custom-control-label" for="questionSwitch{{ question.id }}">
+                    {{ question.description }}
+                </label>
+            </div>
+        </li>  
+    {% endfor %}
+    </ul>
+    <br>
+    <button type="submit" class="btn btn-success btn-lg btn-block">Отправить</button>
+</form>
+{% endblock %}
