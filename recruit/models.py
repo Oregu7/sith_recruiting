@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils.crypto import get_random_string
+from basic.helpers import simple_paginator
 
 
 class Recruit(models.Model):
@@ -49,6 +50,7 @@ class ShadowHandSession(models.Model):
     recruit = models.ForeignKey(Recruit, on_delete=models.CASCADE)
     token = models.CharField(max_length=42, unique=True)
     done = models.BooleanField(default=False)
+    success = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -58,6 +60,12 @@ class ShadowHandSession(models.Model):
         session = cls(test=test, recruit=recruit, token=token)
         session.save()
         return session
+
+    @classmethod
+    def pagination_actual(cls, page: int = 1, limit: int = 10):
+        object_list = cls.objects.filter(done=True, success=False).order_by('recruit__name').distinct()
+        session_list = simple_paginator(object_list, page=page, limit=limit)
+        return session_list
 
 class ShadowHandAnswer(models.Model):
     session = models.ForeignKey(ShadowHandSession, on_delete=models.CASCADE)
