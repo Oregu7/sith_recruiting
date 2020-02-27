@@ -1,0 +1,14 @@
+{% extends 'basic/main_template.html' %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Главная</a></li>
+        <li class="breadcrumb-item"><a href="/siths/">Ситхи</a></li>
+        <li class="breadcrumb-item"><a href="/siths/{{ sith.id }}">{{ sith }}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Рекруты</li>
+    </ol>
+</nav>  
+
+
+{% endblock content %}

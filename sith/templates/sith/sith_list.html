@@ -1,0 +1,36 @@
+{% extends 'basic/main_template.html' %} 
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Главная</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Ситхи</li>
+    </ol>
+</nav>  
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Имя</th>
+      <th scope="col">Планета</th>
+      <th scope="col">Рук Тени</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for sith in sith_list %}
+    <tr>
+        <td>
+            <a href="/siths/{{ sith.id }}/recruits/">{{ sith.name }}</a>
+        </td>
+        <td>{{ sith.planet }}</td>
+        <td>
+            {{ sith.shadowhand_set.all|length }}
+        </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% with sith_list as items %}
+    {% include 'basic/includes/paginator.html' %}
+{% endwith %}
+
+{% endblock content %}

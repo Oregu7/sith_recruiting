@@ -1,8 +1,6 @@
 from django.contrib import admin
-from .models import Recruit, ShadowHandTest, ShadowHandQuestion, ShadowHandSession, ShadowHandAnswer
+from .models import Recruit, ShadowHandTest, ShadowHandQuestion
 
-admin.site.register(ShadowHandSession)
-admin.site.register(ShadowHandAnswer)
 
 @admin.register(Recruit)
 class RecruitAdmin(admin.ModelAdmin):
