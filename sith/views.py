@@ -1,14 +1,15 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import View
 from django.http import JsonResponse, HttpResponseBadRequest
-import requests
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
 
+from sith_recruiting.settings import SENDGRID_API_KEY
 from recruit.models import ShadowHandSession
 from .models import Sith, ShadowHand
 
 
 def sith_list(request):
-    print(send_simple_message())
     page = request.GET.get('page', 1)
     sith_list = Sith.pagination(page=page, limit=10)
     return render(request, "sith/sith_list.html", context={ 'sith_list': sith_list })
@@ -41,14 +42,18 @@ def set_shadowhand(request, sith_id):
     except:
         return JsonResponse({"message": "Данного рекрута уже завербовали!"}, status=400)
     
+    send_message_to_recruit(sith, session.recruit)
     return JsonResponse({"message": "Вы повисили рекрута до Руки Тени"})
 
 
-def send_simple_message():
-	return requests.post(
-		"https://api.mailgun.net/v3/sandboxe07304aca91a4b7a9ca7aeb0ab3a2d37.mailgun.org/messages",
-		auth=("api", "e4f789c4cff87d1f7d63d6649c1216d5-9dda225e-c29defae"),
-		data={"from": "Palpatine <palpatine@sith-recruiting.herokuapp.com>",
-			"to": ["mr.oreguz@gmail.com", "mr.oregu@mail.ru"],
-			"subject": "Hello",
-			"text": "Testing some Mailgun awesomness!"})
+def send_message_to_recruit(sith, recruit):
+    message = Mail(
+    from_email='Palpatine@sith-recruiting.herokuapp.com',
+    to_emails=recruit.email,
+    subject=f'{recruit.name}, добро пожаловать в Орден Ситхов!',
+    html_content=f'Ситх <strong>{sith.name}</strong> выбрал Вас в качестве Руки Тьмы. {recruit.name}, Вам необходимо прибыть на планету <strong>{sith.planet}</strong>.')
+    try:
+        sg = SendGridAPIClient(SENDGRID_API_KEY)
+        response = sg.send(message)
+    except Exception as e:
+        print(e.message)

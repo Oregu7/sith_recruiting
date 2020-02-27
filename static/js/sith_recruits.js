@@ -14,6 +14,7 @@ async function setShadowHand(event) {
             icon: 'success',
             confirmButtonText: 'OK'
         });
+        target.remove();
     } catch (error) {
         Swal.fire({
             title: 'Ошибка!',
