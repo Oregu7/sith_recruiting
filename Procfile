@@ -1,0 +1,1 @@
+web: gunicorn sith_recruiting.wsgi
