@@ -21,4 +21,32 @@
     <a type="button" href="/siths/{{ sith.id }}/recruits/" class="btn btn-info btn-lg btn-block">Поиск рекрутов</a>
   </div>
 </div>
+
+{% if sith.shadowhand_set.all|length != 0 %}
+<table class="table table-hover">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Рука Тени</th>
+      <th scope="col">Возраст</th>
+      <th scope="col">Планета</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for shadowhand in sith.shadowhand_set.all %}
+  <tr>
+      <th scope="row">
+          {{ shadowhand.recruit }}
+      </th>
+      <td>
+          {{ shadowhand.recruit.age }}
+      </td>
+      <td>
+        {{ shadowhand.recruit.planet }}
+      </td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+
 {% endblock content %}
