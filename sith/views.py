@@ -48,7 +48,7 @@ def set_shadowhand(request, sith_id):
 
 def send_message_to_recruit(sith, recruit):
     message = Mail(
-    from_email='Palpatine@sith-recruiting.herokuapp.com',
+    from_email='Palpatine@sendgrid.net',
     to_emails=recruit.email,
     subject=f'{recruit.name}, добро пожаловать в Орден Ситхов!',
     html_content=f'Ситх <strong>{sith.name}</strong> выбрал Вас в качестве Руки Тьмы. {recruit.name}, Вам необходимо прибыть на планету <strong>{sith.planet}</strong>.')
