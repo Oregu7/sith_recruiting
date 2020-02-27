@@ -25,7 +25,7 @@ SECRET_KEY = '0ax$apke@+vrw!ieglo%m%x#we5d&psv2y_55uv%-pp!dj8t=$'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition

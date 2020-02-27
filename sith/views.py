@@ -1,12 +1,14 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import View
 from django.http import JsonResponse, HttpResponseBadRequest
+import requests
 
 from recruit.models import ShadowHandSession
 from .models import Sith, ShadowHand
 
 
 def sith_list(request):
+    print(send_simple_message())
     page = request.GET.get('page', 1)
     sith_list = Sith.pagination(page=page, limit=10)
     return render(request, "sith/sith_list.html", context={ 'sith_list': sith_list })
@@ -40,3 +42,13 @@ def set_shadowhand(request, sith_id):
         return JsonResponse({"message": "Данного рекрута уже завербовали!"}, status=400)
     
     return JsonResponse({"message": "Вы повисили рекрута до Руки Тени"})
+
+
+def send_simple_message():
+	return requests.post(
+		"https://api.mailgun.net/v3/sandboxe07304aca91a4b7a9ca7aeb0ab3a2d37.mailgun.org/messages",
+		auth=("api", "e4f789c4cff87d1f7d63d6649c1216d5-9dda225e-c29defae"),
+		data={"from": "Palpatine <palpatine@sith-recruiting.herokuapp.com>",
+			"to": ["mr.oreguz@gmail.com", "mr.oregu@mail.ru"],
+			"subject": "Hello",
+			"text": "Testing some Mailgun awesomness!"})
