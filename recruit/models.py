@@ -47,7 +47,7 @@ class ShadowHandQuestion(models.Model):
 
 class ShadowHandSession(models.Model):
     test = models.ForeignKey(ShadowHandTest, on_delete=models.CASCADE)
-    recruit = models.ForeignKey(Recruit, on_delete=models.CASCADE)
+    recruit = models.OneToOneField(Recruit, on_delete=models.CASCADE)
     token = models.CharField(max_length=42, unique=True)
     done = models.BooleanField(default=False)
     success = models.BooleanField(default=False)

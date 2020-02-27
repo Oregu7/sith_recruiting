@@ -12,17 +12,29 @@
         <th scope="col">Имя</th>
         <th scope="col">Планета</th>
         <th scope="col">Рук Тени</th>
+        <th scope="col">Действия</th>
     </tr>
     </thead>
     <tbody>
     {% for sith in sith_list %}
     <tr>
         <td>
-            <a href="/siths/{{ sith.id }}/recruits/">{{ sith.name }}</a>
+            <a href="/siths/{{ sith.id }}/">{{ sith.name }}</a>
         </td>
         <td>{{ sith.planet }}</td>
         <td>
             {{ sith.shadowhand_set.all|length }}
+        </td>
+        <td>
+            <a type="button" class="btn btn-outline-success" href="/siths/{{ sith.id }}/">
+                Выбрать
+            </a>
+            <a 
+                type="button" 
+                class="btn btn-outline-info"
+                href="/siths/{{ sith.id }}/recruits/">
+                Поиск рекрутов
+            </a>
         </td>
     </tr>
     {% endfor %}

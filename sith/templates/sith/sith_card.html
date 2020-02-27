@@ -1,0 +1,24 @@
+{% extends 'basic/main_template.html' %} 
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Главная</a></li>
+        <li class="breadcrumb-item"><a href="/siths/">Ситхи</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ sith }}</li>
+    </ol>
+</nav>
+
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">{{ sith }}</h1>
+    <p class="lead">
+        <ul>
+            <li>Планета: {{ sith.planet }}</li>
+            <li>Рук Тени: {{ sith.shadowhand_set.all|length }}</li>
+        </ul>
+    </p>
+    <a type="button" href="/siths/{{ sith.id }}/recruits/" class="btn btn-info btn-lg btn-block">Поиск рекрутов</a>
+  </div>
+</div>
+{% endblock content %}

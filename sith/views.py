@@ -10,6 +10,11 @@ def sith_list(request):
     return render(request, "sith/sith_list.html", context={ 'sith_list': sith_list })
 
 
+def sith_card(request, sith_id):
+   sith = get_object_or_404(Sith, id=sith_id)
+   return render(request, "sith/sith_card.html", context={ 'sith': sith }) 
+
+
 def sith_recruits(request, sith_id):
     sith = get_object_or_404(Sith, id=sith_id)
     page = request.GET.get('page', 1)
