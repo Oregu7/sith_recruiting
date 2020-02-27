@@ -63,7 +63,7 @@ class ShadowHandSession(models.Model):
 
     @classmethod
     def pagination_actual(cls, page: int = 1, limit: int = 10):
-        object_list = cls.objects.filter(done=True, success=False).order_by('recruit__name').distinct()
+        object_list = cls.objects.filter(done=True, success=False).order_by('-created_at')
         session_list = simple_paginator(object_list, page=page, limit=limit)
         return session_list
 
