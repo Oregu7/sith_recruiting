@@ -2,31 +2,40 @@
 
 {% block content %}
 <h1 class="display-4">Тестовое испытание Руки Тени</h1>
-{% if error_message %}
-    <div class="alert alert-danger">
-        {{ error_message }}
-    </div>
+{% if session.done %}
+<div class="alert alert-success" role="alert">
+  <h4 class="alert-heading">{{ session.recruit }}, ты успешно прошел испытание ордена "{{ session.test }}"!</h4>
+  
+  <hr>
+  <p>Тебе осталось дождаться, когда с тобой свяжется мастер-ситх. Перейти на <a href="/">главную</a></p> 
+</div>
+{% else %}
+    {% if error_message %}
+        <div class="alert alert-danger">
+            {{ error_message }}
+        </div>
+    {% endif %}
+    <form class="" method="post">
+        {% csrf_token %}
+        <ul class="list-group">
+        {% for question in questions %}
+            <li class="list-group-item">
+                <div class="custom-control custom-switch">
+                    <input 
+                        type="checkbox" 
+                        class="custom-control-input" 
+                        id="questionSwitch{{ question.id }}"
+                        name="question[]"
+                        value="{{ question.id }}">
+                    <label class="custom-control-label" for="questionSwitch{{ question.id }}">
+                        {{ question.description }}
+                    </label>
+                </div>
+            </li>  
+        {% endfor %}
+        </ul>
+        <br>
+        <button type="submit" class="btn btn-success btn-lg btn-block">Отправить</button>
+    </form>
 {% endif %}
-<form class="" method="post">
-    {% csrf_token %}
-    <ul class="list-group">
-    {% for question in questions %}
-        <li class="list-group-item">
-            <div class="custom-control custom-switch">
-                <input 
-                    type="checkbox" 
-                    class="custom-control-input" 
-                    id="questionSwitch{{ question.id }}"
-                    name="question[]"
-                    value="{{ question.id }}">
-                <label class="custom-control-label" for="questionSwitch{{ question.id }}">
-                    {{ question.description }}
-                </label>
-            </div>
-        </li>  
-    {% endfor %}
-    </ul>
-    <br>
-    <button type="submit" class="btn btn-success btn-lg btn-block">Отправить</button>
-</form>
 {% endblock %}

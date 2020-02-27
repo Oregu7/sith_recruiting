@@ -50,7 +50,7 @@ class RecruitTesting(View):
         session.done = True
         session.save(update_fields=['done'])
 
-        return redirect("/")
+        return render(request, 'recruit/recruit_testing.html', context={ 'session': session })
 
     def create_answers(self, session, questions, answers):
         shadow_hand_answers = []
